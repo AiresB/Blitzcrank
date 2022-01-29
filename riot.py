@@ -36,12 +36,12 @@ def get_rank(pseudo, token, queue_type="RANKED_TFT"):
         if rank["queueType"] == queue_type:
             return get_print(rank), get_lp(rank)
         else:
-            return "Unranked Player", 0
+            return f"{pseudo}: Unranked player", 0
     else:
         for l in rank:
             if l["queueType"] == queue_type:
                 return get_print(l), get_lp(l)
-    return "Unranked player", 0
+    return f"{pseudo}: Unranked player", 0
 
 def get_list(pseudos, token, queue_type="RANKED_TFT"):
     tp = []
