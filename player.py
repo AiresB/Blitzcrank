@@ -1,33 +1,40 @@
 class Player:
-    def __init__(self, pseudo, id, tag, ranked):
+    def __init__(self, pseudo, id, tag, ranking, ranking_int):
         self.pseudo = pseudo
         self.id = id
         self.tag = tag
-        self.ranked = ranked
+        self.ranking = ranking
+        self.ranking_int = ranking_int
     
-    def getPseudo(self): 
+    def get_pseudo(self): 
         return self.pseudo
     
-    def getId(self): 
+    def get_id(self): 
         return self.id
     
-    def getTag(self): 
+    def get_tag(self): 
         return self.tag
     
-    def getRanked(self): 
-        return self.ranked
+    def get_ranking(self): 
+        return self.ranking
+    
+    def get_ranking_int(self): 
+        return self.ranking_int
 
-    def setPseudo(self,pseudo):
+    def set_pseudo(self,pseudo):
         self.pseudo = pseudo
 
-    def setId(self,id):
+    def set_id(self,id):
         self.id = id
     
-    def setTag(self,tag):
+    def set_tag(self,tag):
         self.tag = tag
 
-    def setRanked(self,ranked):
-        self.ranked = ranked
+    def set_ranking(self,ranking):
+        self.ranking = ranking
+
+    def set_ranking_int(self,ranking_int):
+        self.ranking_int = ranking_int
     
     
     
