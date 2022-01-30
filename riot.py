@@ -29,7 +29,7 @@ def get_rank(pseudo, token, queue_type="RANKED_TFT"):
     if not token_work(token):
         return "Error Token, please reload the token with !token [token]", 0
     param = {"api_key": token}
-    player = get_player(pseudo, param)
+    player = get_player(pseudo, param) ##remove
     id = player["id"]
     rank = requests.get(f'https://euw1.api.riotgames.com/tft/league/v1/entries/by-summoner/{id}', params=param).json()
     if type(rank) != list:
@@ -45,6 +45,7 @@ def get_rank(pseudo, token, queue_type="RANKED_TFT"):
 
 def get_list(pseudos, token, queue_type="RANKED_TFT"):
     tp = []
+    st = []
     for p in pseudos:
         tp.append(get_rank(p, token, queue_type))
     st = sorted(tp, key = lambda x: x[1], reverse=True)

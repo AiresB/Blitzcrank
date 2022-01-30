@@ -17,10 +17,6 @@ lst = []
 async def on_ready():
     print("Bot connected")
 
-@bot.command(name="repeat")
-async def repeat(ctx, rep: str):
-    await ctx.message.channel.send(rep)
-
 @bot.command(name="add")
 async def add(ctx, pseudo: str):
     lst.append(pseudo)
@@ -31,17 +27,11 @@ async def rm(ctx, pseudo: str):
     lst.remove(pseudo)
     await ctx.message.channel.send(pseudo + " removed")
 
-@bot.command(name="list")
+@bot.command(name="ranking")
 async def ls(ctx):
     res = get_list(lst, RIOT_TOKEN)
     for r in res:
         await ctx.message.channel.send(r[0])
-
-@bot.command(name="rank")
-async def rank(ctx, pseudo: str, queuetype: str):
-    global RIOT_TOKEN
-    rank, _ = get_rank(pseudo, RIOT_TOKEN, queuetype)
-    await ctx.message.channel.send(rank)
 
 @bot.command(name="token")
 async def token(ctx, token: str):
