@@ -8,9 +8,9 @@ Discord bot interfacing riot games api to have information about ingame content.
 
 ## Tech Stack
 
-**Python:** Requests, Discord
+**Python:** [Requests](https://docs.python-requests.org/en/latest/), [Discord.py](https://discordpy.readthedocs.io/en/stable/)
 
-**API:** Discord, Riot Games
+**API:** [Discord](https://discord.com/developers/docs/intro), [Riot Games](https://developer.riotgames.com/apis)
 
 
 ## Run Bliztcrank
