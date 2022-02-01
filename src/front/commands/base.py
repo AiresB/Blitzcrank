@@ -45,3 +45,7 @@ class Base(discord.ext.commands.Cog, name='Base functions'):
         res = get_list(self.list, token.RIOT_TOKEN)
         for r in res:
             await ctx.message.channel.send(r[0])
+
+    @discord.ext.commands.command(name="list")
+    async def ranking(self, ctx):
+        await ctx.message.channel.send(self.list)
