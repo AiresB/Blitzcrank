@@ -47,5 +47,5 @@ class Base(discord.ext.commands.Cog, name='Base functions'):
             await ctx.message.channel.send(r[0])
 
     @discord.ext.commands.command(name="list")
-    async def ranking(self, ctx):
+    async def lst(self, ctx):
         await ctx.message.channel.send(self.list)
