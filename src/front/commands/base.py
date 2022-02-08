@@ -3,6 +3,7 @@ import discord
 import src.front.commands.token as token
 
 from src.back.riot import get_list
+from src.back.player import Player
 
 class Base(discord.ext.commands.Cog, name='Base functions'):
 

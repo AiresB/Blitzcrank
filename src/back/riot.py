@@ -1,4 +1,4 @@
-import requests
+from src.back.my_requests import safe_requests
 
 def token_work(token):
     """[Check the validity of the token]
@@ -10,8 +10,8 @@ def token_work(token):
         [Bool]: [True: token works, False: token doesn't work]
     """
     p = {"api_key": token}
-    res = requests.get("https://euw1.api.riotgames.com/lol/status/v3/shard-data", params=p)
-    if res.status_code != 200:
+    status, _ = safe_requests("https://euw1.api.riotgames.com/lol/status/v3/shard-data", params=p)
+    if status != 200:
         print("Error Token, please reload the token with !token [token]")
         return False
     else:
@@ -45,7 +45,7 @@ def get_lp(dic):
     return lp
 
 
-def get_player(pseudo, param):
+def get_player_id(pseudo, param):
     """[get informations on the player by his pseudo]
 
     Args:
@@ -55,7 +55,11 @@ def get_player(pseudo, param):
     Returns:
         [dict]: [dict of the player informations]
     """
-    return requests.get(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/by-name/{pseudo}', params=param).json()
+    status, res = safe_requests(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/by-name/{pseudo}', params=param)
+    if status == 200:
+        return res["id"]
+    else:
+        return 0
 
 
 def get_rank(pseudo, token, queue_type="RANKED_TFT"):
@@ -73,16 +77,20 @@ def get_rank(pseudo, token, queue_type="RANKED_TFT"):
     if not token_work(token):
         return "Error Token, please reload the token with !token [token]", 0
     param = {"api_key": token}
-    player = get_player(pseudo, param) ##remove
-    id = player["id"]
-    rank = requests.get(f'https://euw1.api.riotgames.com/tft/league/v1/entries/by-summoner/{id}', params=param).json()
-    if type(rank) != list:
-        if rank["queueType"] == queue_type:
-            return get_print(rank), get_lp(rank)
+    id = get_player_id(pseudo, param)
+    if id == 0:
+        return f"{pseudo}: Unrecognize player", 0
+    status, res = safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/entries/by-summoner/{id}', params=param)
+    if status != 200:
+        return f"{pseudo}: Unranked player", 0
+
+    if type(res) != list:
+        if res["queueType"] == queue_type:
+            return get_print(res), get_lp(res)
         else:
             return f"{pseudo}: Unranked player", 0
     else:
-        for l in rank:
+        for l in res:
             if l["queueType"] == queue_type:
                 return get_print(l), get_lp(l)
     return f"{pseudo}: Unranked player", 0
