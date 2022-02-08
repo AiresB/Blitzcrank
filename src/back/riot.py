@@ -35,6 +35,9 @@ def get_player_id(pseudo, param):
     Returns:
         [dict]: [dict of the player informations]
     """
+    if not token_work(param["api_key"]):
+        return ERROR_TOKEN
+
     status, res = safe_requests(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/by-name/{pseudo}', params=param)
     if status == 200:
         return res["id"]
@@ -53,6 +56,9 @@ def get_player(pseudo, param):
         [status code]: []
         [response]: [response json as dict]
     """
+    if not token_work(param["api_key"]):
+        return ERROR_TOKEN
+
     return safe_requests(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/by-name/{pseudo}', params=param)
 
 
