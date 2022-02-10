@@ -14,7 +14,7 @@ class Wrp_TFT_SUMMONER():
 
     """
 
-    def get_player_by_pseudo(self, pseudo, key):
+    def get_tft_player_by_pseudo(self, pseudo, key):
         """[get player info from pseudo]
 
         Args:
@@ -31,7 +31,7 @@ class Wrp_TFT_SUMMONER():
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/by-name/{pseudo}', params=param)
 
-    def get_player_by_summ_id(self, summ_id, key):
+    def get_tft_player_by_summ_id(self, summ_id, key):
         """[get player info from SummonerId]
 
         Args:
@@ -48,7 +48,7 @@ class Wrp_TFT_SUMMONER():
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/{summ_id}', params=param)
 
-    def get_player_by_puuid(self, puuid, key):
+    def get_tft_player_by_puuid(self, puuid, key):
         """[get player info from puuid]
 
         Args:
@@ -65,7 +65,7 @@ class Wrp_TFT_SUMMONER():
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/by-puuid/{puuid}', params=param)
 
-    def get_player_by_acc_id(self, acc_id, key):
+    def get_tft_player_by_acc_id(self, acc_id, key):
         """[get player info from account id]
 
         Args:

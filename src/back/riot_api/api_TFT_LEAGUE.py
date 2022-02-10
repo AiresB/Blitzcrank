@@ -15,7 +15,7 @@ class Wrp_TFT_LEAGUE():
     /tft/league/v1/rated-ladders/{queue}/top
     """
 
-    def get_challengers(self, key):
+    def get_tft_challengers(self, key):
         """[get all players challenger]
 
         Args:
@@ -31,7 +31,7 @@ class Wrp_TFT_LEAGUE():
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/challenger', params=param)
 
-    def get_grandmaster(self, key):
+    def get_tft_grandmaster(self, key):
         """[get all players grandmaster]
 
         Args:
@@ -47,7 +47,7 @@ class Wrp_TFT_LEAGUE():
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/grandmaster', params=param)
 
-    def get_master(self, key):
+    def get_tft_master(self, key):
         """[get all players master]
 
         Args:
@@ -63,7 +63,7 @@ class Wrp_TFT_LEAGUE():
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/master', params=param)
 
-    def get_player_infos_by_summ_id(self, summ_id, key):
+    def get_tft_player_infos_by_summ_id(self, summ_id, key):
         """[Get league entries for a given summoner ID]
 
         Args:
@@ -80,7 +80,7 @@ class Wrp_TFT_LEAGUE():
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/entries/by-summoner/{summ_id}', params=param)
 
-    def get_league(self, tier, div, page, key):
+    def get_tft_league(self, tier, div, page, key):
         """[Get all the league entries]
 
         Args:
@@ -99,7 +99,7 @@ class Wrp_TFT_LEAGUE():
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/entries/{tier}/{div}?page={page}', params=param)
 
-    def get_league_from_id(self, id, key):
+    def get_tft_league_from_id(self, id, key):
         """[Get league with given ID, including inactive entries]
 
         Args:
@@ -116,7 +116,7 @@ class Wrp_TFT_LEAGUE():
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/leagues/{id}', params=param)
 
-    def get_ladder_from_queue(self, key, queue="RANKED_TFT_TURBO"):
+    def get_tft_ladder_from_queue(self, key, queue="RANKED_TFT_TURBO"):
         """[Get the top rated ladder for given queue]
 
         Args:
