@@ -1,8 +1,8 @@
 from src.back.my_requests import safe_requests
-from src.back.riot_api.api_LOL_STATUS import Wrp_LOL_STATUS
+from src.back.riot_api_wrp.api_LOL_STATUS import Wrp_LOL_STATUS
 
 
-class Wrp_TFT_SUMMONER():
+class Wrp_TFT_SUMMONER:
     """
     Wrapper for riot games api: TFT-SUMMONER-V1
     roots wrapped:
@@ -25,7 +25,7 @@ class Wrp_TFT_SUMMONER():
             [status code]: []
             [response]: [response json as dict]
         """
-        if not Wrp_LOL_STATUS.token_work(key):
+        if not Wrp_LOL_STATUS().token_work(key):
             return 401, {"message": "Error Token"}
 
         param = {"api_key": key}
@@ -42,7 +42,7 @@ class Wrp_TFT_SUMMONER():
             [status code]: []
             [response]: [response json as dict]
         """
-        if not Wrp_LOL_STATUS.token_work(key):
+        if not Wrp_LOL_STATUS().token_work(key):
             return 401, {"message": "Error Token"}
 
         param = {"api_key": key}
@@ -59,7 +59,7 @@ class Wrp_TFT_SUMMONER():
             [status code]: []
             [response]: [response json as dict]
         """
-        if not Wrp_LOL_STATUS.token_work(key):
+        if not Wrp_LOL_STATUS().token_work(key):
             return 401, {"message": "Error Token"}
 
         param = {"api_key": key}
@@ -76,7 +76,7 @@ class Wrp_TFT_SUMMONER():
             [status code]: []
             [response]: [response json as dict]
         """
-        if not Wrp_LOL_STATUS.token_work(key):
+        if not Wrp_LOL_STATUS().token_work(key):
             return 401, {"message": "Error Token"}
 
         param = {"api_key": key}
