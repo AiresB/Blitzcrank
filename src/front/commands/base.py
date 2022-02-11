@@ -2,7 +2,7 @@ import discord
 
 import src.front.commands.token as token
 
-from src.back.riot import get_list, ERROR_TOKEN
+from src.back.riot import get_ranking
 from src.back.riot_api import Riot_API
 from src.back.player import Player
 
@@ -25,6 +25,9 @@ class Base(discord.ext.commands.Cog, name='Base functions'):
 
         if status != 200:
             await ctx.message.channel.send(res["status"]["message"])
+            return
+        elif self._get_player_from_list(res["name"]) != None:
+            await ctx.message.channel.send(f"Error: {arg} already registered")
             return
 
         new_player = Player(res)
@@ -63,7 +66,7 @@ class Base(discord.ext.commands.Cog, name='Base functions'):
         Args:
             ctx : [context]
         """
-        rank = get_list(self.list, token.RIOT_TOKEN)
+        rank = get_ranking(self.list, token.RIOT_TOKEN)
         res = "Ranking:\n"
         for r in rank:
             res += r[0] + "\n"

@@ -1,4 +1,5 @@
 from src.back.my_requests import safe_requests
+from src.back.riot_api import Riot_API
 
 global ERROR_TOKEN
 global ERROR_UNKNOWN_PLAYER
@@ -7,60 +8,6 @@ global ERROR_UNRANKED_PLAYER
 ERROR_TOKEN = -1
 ERROR_UNKNOWN_PLAYER = -2
 ERROR_UNRANKED_PLAYER = -3
-
-def token_work(token):
-    """[Check the validity of the token]
-
-    Args:
-        token (str): [riot api]
-
-    Returns:
-        [Bool]: [True: token works, False: token doesn't work]
-    """
-    p = {"api_key": token}
-    status, _ = safe_requests("https://euw1.api.riotgames.com/lol/status/v4/platform-data", params=p)
-    if status != 200:
-        print("Error Token, please reload the token with !token [token]")
-        return False
-    else:
-        return True
-
-def get_player_id(pseudo, param):
-    """[get informations on the player by his pseudo]
-
-    Args:
-        pseudo ([str]): [pseudo of the player searched]
-        param ([dict]): [param from the requests, containing token]
-
-    Returns:
-        [dict]: [dict of the player informations]
-    """
-    if not token_work(param["api_key"]):
-        return ERROR_TOKEN
-
-    status, res = safe_requests(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/by-name/{pseudo}', params=param)
-    if status == 200:
-        return res["id"]
-    else:
-        return ERROR_UNKNOWN_PLAYER
-
-
-def get_player(pseudo, param):
-    """[get player info from pseudo]
-
-    Args:
-        pseudo ([str]): [pseudo of the player to search]
-        param ([dict]): [dict containing params like api key]
-
-    Returns:
-        [status code]: []
-        [response]: [response json as dict]
-    """
-    if not token_work(param["api_key"]):
-        return ERROR_TOKEN
-
-    return safe_requests(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/by-name/{pseudo}', params=param)
-
 
 def get_print(dic):
     """[get the ranked string from the dic]
@@ -89,46 +36,33 @@ def get_lp(dic):
     return lp
 
 
-def get_rank(pseudo, token, queue_type="RANKED_TFT"):
-    """[get the rank of a player given his pseudo and the queue type]
+def get_rank_by_player(player, token, queue_type="RANKED_TFT"):
 
-    Args:
-        pseudo ([str]): [pseudo of the player]
-        token ([str]): [riot api token]
-        queue_type (str): [queue type]. Defaults to "RANKED_TFT".
-
-    Returns:
-        [str]: [rank as str]
-        [int]: [rank as int]
-    """
-    if not token_work(token):
+    if not Riot_API().token_work(token):
         return "Error Token, please reload the token with !token [token]", ERROR_TOKEN
 
-    param = {"api_key": token}
-    id = get_player_id(pseudo, param)
-    if id == ERROR_UNKNOWN_PLAYER:
-        return f"{pseudo}: Unrecognize player", ERROR_UNKNOWN_PLAYER
+    status, res = Riot_API().get_tft_player_infos_by_summ_id(player.id, token)
 
-    status, res = safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/entries/by-summoner/{id}', params=param)
-    if status != 200:
-        return f"{pseudo}: Unranked player", ERROR_UNRANKED_PLAYER
+    if status == 403:
+        print("wrong id")
+        player.update(Riot_API().get_tft_player_by_pseudo(player.pseudo))
+        status, res = Riot_API().get_tft_player_infos_by_summ_id(player.id, token)
 
-    if type(res) != list:
-        if res["queueType"] == queue_type:
-            return get_print(res), get_lp(res)
-        else:
-            return f"{pseudo}: Unranked player", ERROR_UNRANKED_PLAYER
-    else:
-        for l in res:
-            if l["queueType"] == queue_type:
-                return get_print(l), get_lp(l)
-    return f"{pseudo}: Unranked player", ERROR_UNRANKED_PLAYER
+        if status != 200:
+            return f"{player.pseudo}: Unrecognize player", ERROR_UNKNOWN_PLAYER
 
-def get_list(pseudos, token, queue_type="RANKED_TFT"):
+    for l in res:
+        if l["queueType"] == queue_type:
+            return get_print(l), get_lp(l)
+
+    return f"{player.pseudo}: Unranked player", ERROR_UNRANKED_PLAYER
+
+
+def get_ranking(players, token, queue_type="RANKED_TFT"):
     """[get the list of the players and return the ranking]
 
     Args:
-        pseudos ([str]): [pseudos]
+        players ([Players]): [Class players]
         token ([str]): [riot api token]
         queue_type (str, optional): [queue type]. Defaults to "RANKED_TFT".
 
@@ -137,7 +71,7 @@ def get_list(pseudos, token, queue_type="RANKED_TFT"):
     """
     tp = []
     st = []
-    for p in pseudos:
-        tp.append(get_rank(p, token, queue_type))
+    for p in players:
+        tp.append(get_rank_by_player(p, token, queue_type))
     st = sorted(tp, key = lambda x: x[1], reverse=True)
     return st
