@@ -26,7 +26,7 @@ class Wrp_TFT_LEAGUE:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(key):
-            return 401, {"message": "Error Token"}
+            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
 
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/challenger', params=param)
@@ -42,7 +42,7 @@ class Wrp_TFT_LEAGUE:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(key):
-            return 401, {"message": "Error Token"}
+            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
 
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/grandmaster', params=param)
@@ -58,7 +58,7 @@ class Wrp_TFT_LEAGUE:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(key):
-            return 401, {"message": "Error Token"}
+            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
 
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/master', params=param)
@@ -75,7 +75,7 @@ class Wrp_TFT_LEAGUE:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(key):
-            return 401, {"message": "Error Token"}
+            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
 
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/entries/by-summoner/{summ_id}', params=param)
@@ -94,7 +94,7 @@ class Wrp_TFT_LEAGUE:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(key):
-            return 401, {"message": "Error Token"}
+            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
 
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/entries/{tier}/{div}?page={page}', params=param)
@@ -111,7 +111,7 @@ class Wrp_TFT_LEAGUE:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(key):
-            return 401, {"message": "Error Token"}
+            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
 
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/leagues/{id}', params=param)
@@ -128,7 +128,7 @@ class Wrp_TFT_LEAGUE:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(key):
-            return 401, {"message": "Error Token"}
+            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
 
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/league/v1/rated-ladders/{queue}/top', params=param)

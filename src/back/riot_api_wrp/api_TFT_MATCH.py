@@ -23,7 +23,7 @@ class Wrp_TFT_MATCH:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(token):
-            return 401, {"message": "Error Token"}
+            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
 
         p = {"api_key": token}
         return safe_requests(f"https://euw1.api.riotgames.com/tft/match/v1/matches/by-puuid/{puuid}/ids?count={nb}", params=p)
@@ -40,7 +40,7 @@ class Wrp_TFT_MATCH:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(token):
-            return 401, {"message": "Error Token"}
+            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
 
         p = {"api_key": token}
         return safe_requests(f"https://euw1.api.riotgames.com/tft/match/v1/matches/{id}", params=p)
