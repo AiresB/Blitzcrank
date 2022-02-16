@@ -5,12 +5,13 @@ import src.front.commands.token as token
 from src.back.riot import get_ranking
 from src.back.riot_api import Riot_API
 from src.back.player import Player
+from src.back.load import load_object, save_object
 
 class Base(discord.ext.commands.Cog, name='Base functions'):
 
     def __init__(self, bot):
         self.bot = bot
-        self.list = []
+        self.list = load_object(".save/save.pickle")
 
     @discord.ext.commands.command(name="add")
     async def add(self, ctx,*, arg):
@@ -32,6 +33,7 @@ class Base(discord.ext.commands.Cog, name='Base functions'):
 
         new_player = Player(res)
         self.list.append(new_player)
+        save_object(self.list, ".save/save.pickle")
         await ctx.message.channel.send(new_player.pseudo + " added")
 
     def _get_player_from_list(self, pseudo):
@@ -55,6 +57,7 @@ class Base(discord.ext.commands.Cog, name='Base functions'):
 
         else:
             self.list.remove(player)
+            save_object(self.list, ".save/save.pickle")
             await ctx.message.channel.send(player.pseudo + " removed")
             del player
 
