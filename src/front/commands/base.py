@@ -1,16 +1,34 @@
 import discord
+import os
 
 import src.front.commands.token as token
 
 from src.back.riot import get_ranking
 from src.back.riot_api import Riot_API
 from src.back.player import Player
+from src.back.database import Database
 
 class Base(discord.ext.commands.Cog, name='Base functions'):
 
     def __init__(self, bot):
         self.bot = bot
         self.list = []
+        self.db = Database(os.getenv("DATABASE_URL"))
+        for l in self.db.get_players():
+            self._load(l[1])
+
+    def _load(self, pseudo):
+        status, res = Riot_API().get_tft_player_by_pseudo(pseudo, token.RIOT_TOKEN)
+
+        if status != 200:
+            print(res["status"]["message"])
+            return
+        elif self._get_player_from_list(res["name"]) != None:
+            print(f"Error: {pseudo} already registered")
+            return
+
+        new_player = Player(res)
+        self.list.append(new_player)
 
     @discord.ext.commands.command(name="add")
     async def add(self, ctx,*, arg):
@@ -32,6 +50,7 @@ class Base(discord.ext.commands.Cog, name='Base functions'):
 
         new_player = Player(res)
         self.list.append(new_player)
+        self.db.add_player(new_player.pseudo)
         await ctx.message.channel.send(new_player.pseudo + " added")
 
     def _get_player_from_list(self, pseudo):
@@ -56,6 +75,7 @@ class Base(discord.ext.commands.Cog, name='Base functions'):
         else:
             self.list.remove(player)
             await ctx.message.channel.send(player.pseudo + " removed")
+            self.db.delete_player(player.pseudo)
             del player
 
     @discord.ext.commands.command(name="ranking")
