@@ -1,5 +1,5 @@
 from src.back.my_requests import safe_requests
-from src.back.riot_api import Riot_API
+from src.back.riot_api import RiotAPI
 
 global ERROR_TOKEN
 global ERROR_UNKNOWN_PLAYER
@@ -38,15 +38,15 @@ def get_lp(dic):
 
 def get_rank_by_player(player, token, queue_type="RANKED_TFT"):
 
-    if not Riot_API().token_work(token):
+    if not RiotAPI().token_work(token):
         return "Error Token, please reload the token with !token [token]", ERROR_TOKEN
 
-    status, res = Riot_API().get_tft_player_infos_by_summ_id(player.id, token)
+    status, res = RiotAPI().get_tft_player_infos_by_summ_id(player.id, token)
 
     if status == 403:
         print("wrong id")
-        player.update(Riot_API().get_tft_player_by_pseudo(player.pseudo))
-        status, res = Riot_API().get_tft_player_infos_by_summ_id(player.id, token)
+        player.update(RiotAPI().get_tft_player_by_pseudo(player.pseudo, token))
+        status, res = RiotAPI().get_tft_player_infos_by_summ_id(player.id, token)
 
         if status != 200:
             return f"{player.pseudo}: Unrecognize player", ERROR_UNKNOWN_PLAYER

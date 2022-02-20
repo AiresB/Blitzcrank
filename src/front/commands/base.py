@@ -4,7 +4,7 @@ import os
 import src.front.commands.token as token
 
 from src.back.riot import get_ranking
-from src.back.riot_api import Riot_API
+from src.back.riot_api import RiotAPI
 from src.back.player import Player
 from src.back.database import Database
 
@@ -18,7 +18,7 @@ class Base(discord.ext.commands.Cog, name='Base functions'):
             self._load(l[1])
 
     def _load(self, pseudo):
-        status, res = Riot_API().get_tft_player_by_pseudo(pseudo, token.RIOT_TOKEN)
+        status, res = RiotAPI().get_tft_player_by_pseudo(pseudo, token.RIOT_TOKEN)
 
         if status != 200:
             print(res["status"]["message"])
@@ -39,7 +39,7 @@ class Base(discord.ext.commands.Cog, name='Base functions'):
             ctx : [context]
             arg (str): [pseudo of the player created]
         """
-        status, res = Riot_API().get_tft_player_by_pseudo(arg, token.RIOT_TOKEN)
+        status, res = RiotAPI().get_tft_player_by_pseudo(arg, token.RIOT_TOKEN)
 
         if status != 200:
             await ctx.message.channel.send(res["status"]["message"])
