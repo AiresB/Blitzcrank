@@ -1,6 +1,6 @@
 import os
 import discord
-from src.back.riot_api import Riot_API
+from src.back.riot_api import RiotAPI
 
 global RIOT_TOKEN
 
@@ -24,7 +24,7 @@ class Token(discord.ext.commands.Cog, name='Token module'):
         async for m in ctx.message.channel.history(limit=1):
             await m.delete()
 
-        if not Riot_API().token_work(token):
+        if not RiotAPI().token_work(token):
             await ctx.message.channel.send("Token Does not work")
         else:
             global RIOT_TOKEN

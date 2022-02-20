@@ -1,6 +1,7 @@
 from src.back.my_requests import safe_requests
 from src.back.riot_api_wrp.api_LOL_STATUS import Wrp_LOL_STATUS
 
+ERROR_TOKEN = 401, {'status': {'message': 'Error Token', 'status_code': 401}}
 
 class Wrp_TFT_SUMMONER:
     """
@@ -26,7 +27,7 @@ class Wrp_TFT_SUMMONER:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(key):
-            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
+            return ERROR_TOKEN
 
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/by-name/{pseudo}', params=param)
@@ -43,7 +44,7 @@ class Wrp_TFT_SUMMONER:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(key):
-            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
+            return ERROR_TOKEN
 
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/{summ_id}', params=param)
@@ -60,7 +61,7 @@ class Wrp_TFT_SUMMONER:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(key):
-            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
+            return ERROR_TOKEN
 
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/by-puuid/{puuid}', params=param)
@@ -77,7 +78,7 @@ class Wrp_TFT_SUMMONER:
             [response]: [response json as dict]
         """
         if not Wrp_LOL_STATUS().token_work(key):
-            return 401, {'status': {'message': 'Error Token', 'status_code': 401}}
+            return ERROR_TOKEN
 
         param = {"api_key": key}
         return safe_requests(f'https://euw1.api.riotgames.com/tft/summoner/v1/summoners/by-account/{acc_id}', params=param)
