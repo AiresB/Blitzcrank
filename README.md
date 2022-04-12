@@ -3,6 +3,7 @@
 
 Discord bot interfacing riot games api to have information about ingame content.
 
+ **pause**: The project is currently in pause, the number of blocking http requests is increasing and requires to do asynchronous, I started to try but it requires to redo a big part of the riot api wrapper that I had made
 
 
 
@@ -53,6 +54,17 @@ Start the bot
 - !remove [pseudo] > remove a registered pseudo
 - !ranking  > show the ranking of the registered players
 - !token [token] > change the riot token
+
+
+## Acknowledgements
+
+ - [Create Discord Bot](https://discord.com/developers/docs/intro)
+ - [Create Discord Bot using discordpy](https://discordpy.readthedocs.io/en/stable/)
+ - [Use riotgames API](https://developer.riotgames.com/apis)
+ - [Wrap API](https://github.com/AiresB/Blitzcrank/tree/main/src/back/riot_api_wrp)
+ - [Deploy bot on Heroku](https://devcenter.heroku.com/categories/reference)
+ - [Deploy Database on Heroku](https://devcenter.heroku.com/categories/reference)
+
 
 ## Authors
 
